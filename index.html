@@ -128,6 +128,7 @@
                     <button class="primary" onclick="loadLib('ombro')">Ombro</button>
                     <button class="primary" onclick="loadLib('biceps')">Biceps</button>
                     <button class="primary" onclick="loadLib('triceps')">Triceps</button>
+                    <button class="primary" onclick="loadLib('core')">Core</button>
                 </div>
                 <div id="libContent"></div>
             </div>
@@ -140,12 +141,75 @@
 <script>
 // Dados da Biblioteca (Resumido para o exemplo)
 const biblioteca = {
-    peito: [{nome:"Supino Reto", video:"supino.mp4"}, {nome:"Crucifixo", video:"crucifixo.mp4"}],
-    costas: [{nome:"Puxada Frente", video:"puxada.mp4"}, {nome:"Remada Baixa", video:"remada triangulo.mp4"}],
-    pernas: [{nome:"Leg Press", video:"leg press.mp4"}, {nome:"Agachamento", video:"agachamento smith.mp4"}],
-    ombro: [{nome:"Elevação Lateral", video:"elevação lateral.mp4"}],
-    biceps: [{nome:"Rosca Direta", video:"rosca direta barra.mp4"}],
-    triceps: [{nome:"Tríceps Pulley", video:"triceps pulley.mp4"}]
+    peito: [{nome:"cross over polia baixa", video:"cross over polia baixa.mp4"},
+        {nome:"crucifixo reto", video:"crucifixo.mp4"},
+        {nome:"supino inclinado halter", video:"supino inclinado halter.mp4"},
+        {nome:"supino reto barra", video:"supino.mp4"},
+        {nome:"flexão de braço", video:"flexao_braco.mp4"},
+        {nome:"peck deck", video:"peck deck.mp4"},
+        {nome:"supino maquina", video:"supino maquina.mp4"},
+        {nome:"supino com halter", video:"supino com halteres.mp4"}],
+
+    costas: [ {nome:"Puxada supinada", video:"puxada supinada.mp4"},
+        {nome:"Remada unilateral com halter", video:"Remada Unilateral com Halter.mp4"},
+        {nome:"Remada triangulo", video:"remada triangulo.mp4"},
+        {nome:"puxada frente", video:"puxada.mp4"},
+        {nome:"remada baixa no cabo", video:"Remada Baixa no Cabo.mp4"},
+        {nome:"puxada fechada", video:"puxada fechada.mp4"},
+        {nome:"peck deck inverso", video:"Peck deck inverso.mp4"},
+        {nome:"remada curvada", video:"remada curvad.mp4"}],
+
+    pernas: [ {nome:"panturrilha em pé", video:"panturrilha em pé.mp4"},
+        {nome:"mesa flexora", video:"mesa flexora.mp4"},
+        {nome:"cadeira exetnsora", video:"extensora.mp4"},
+        {nome:"leg press", video:"leg press.mp4"},
+        {nome:"agachamento smith", video:"agachamento smith.mp4"},
+        {nome:"cadeira abdultora", video:"abdutora.mp4"},
+        {nome:"agachamento com halter", video:"agachamento.mp4"},
+        {nome:"elevação de quadril", video:"elevacao_quadril.mp4"},
+        {nome:"stiff unilateral", video:"stiff unilateral.mp4"},
+        {nome:"gluteo no cabo", video:"gluteo no cabo.mp4"},
+        {nome:"agachamento sumo", video:"agachamento_sumo.mp4"},
+        {nome:"afundo no smith", video:"Afundo smith.mp4"},
+        {nome:"hack", video:"hack.mp4"},
+        {nome:"panturrilha sentado", video:"panturrilha sentado.mp4"},
+        {nome:"bulgaro", video:"bulgaro.mp4"},
+        {nome:"afundo", video:"afundo.mp4"},
+        {nome:"agachamento livre barra", video:"agachamento livre barra.mp4"},
+        {nome:"adutora", video:"adutora.mp4"},
+        {nome:"stiff ", video:"stiff.mp4"}],
+
+    ombro: [{nome:"elevação frontal", video:"elevação frontal.mp4"},
+        {nome:"elevação lateral", video:"elevação lateral.mp4"},
+        {nome:"desenvolvimento", video:"desenvolvimento.mp4"},
+        {nome:"remada alta polia", video:"remada alta polia .mp4"},
+        {nome:"peck deck inverso", video:"Peck deck inverso.mp4"},
+        {nome:"encolhimento", video:"encolhimento.mp4"},
+        {nome:"desenvolvimento", video:"desenvolvimento maquina.mp4"}],
+
+    biceps: [{nome:"Rosca concentrada", video:"rosca concentrada.mp4"},
+        {nome:"Rosca com giro 45", video:"rosca com giro 45.mp4"},
+        {nome:"Rosca com giro", video:"rosca com giro.mp4"},
+        {nome:"Rosca scoth barra", video:"rosca scoth barra.mp4"},
+        {nome:"Rosca direta barra", video:"rosca direta barra.mp4"},
+        {nome:"Rosca martelo", video:"Rosca Martelo.mp4"},
+        {nome:"Rosca unilateral", video:"rosca unilateral.mp4"},
+        {nome:"Rosca direta cross", video:"rosca.mp4"}, 
+        {nome:"Rosca alternada", video:"rosca alternada.mp4"}],
+
+    triceps: [ {nome:"triceps banco", video:"triceps banco.mp4"},
+        {nome:"triceps testa cross", video:"triceps testa.mp4"},
+        {nome:"triceps corda", video:"triceps corda.mp4"},
+        {nome:"triceps coice halter", video:"triceps coice halter.mp4"},
+        {nome:"triceps pulley", video:"triceps pulley.mp4"}],
+
+    core: [
+        {nome:"Prancha", video:"prancha.mp4"},
+        {nome:"prancha lateral", video:"prancha lateral.mp4"},
+        {nome:"sit up", video:"sit up.mp4"},
+        {nome:"infra solo", video:"abdomen infra solo.mp4"},
+        {nome:"Abdominal crunch", video:"abdominal crunch.mp4"}
+    ],
 };
 
 // Exemplo de Aluno (Dados que você já tem no seu script original)
