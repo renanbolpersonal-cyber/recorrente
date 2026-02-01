@@ -47,26 +47,29 @@
   /* Content */
   main.content { flex: 1; padding: 15px; }
   .section-box { background: var(--panel); border: 1px solid #2a2a2a; padding: 18px; border-radius: 14px; margin-bottom: 18px; }
-  .section-box h2 { margin-top: 0; color: var(--accent); font-size: 20px; }
+  .section-box h2 { margin-top: 0; color: var(--accent); font-size: 20px; text-transform: uppercase; letter-spacing: 1px; }
 
-  /* Workouts Grid */
-  .workouts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 15px; }
-  .workouts button { padding: 12px; border-radius: 8px; background: #1a1a1a; color: #fff; border: 1px solid #333; font-weight: 800; }
-  .workouts button.selected { background: var(--accent); color: #000; }
-
-  /* Treino List Style (Text Only) */
-  .workout-item { 
+  /* Lista de Itens do Plano (Visual Clean) */
+  .plan-item { 
     background: #1a1a1a; 
     padding: 15px; 
     border-radius: 10px; 
-    margin-bottom: 10px; 
+    margin-bottom: 12px; 
     border-left: 4px solid var(--accent);
+    white-space: pre-wrap; /* Mantém a organização da lista */
+    line-height: 1.6;
   }
-  .workout-item h3 { margin: 0 0 5px 0; font-size: 16px; color: #fff; text-transform: uppercase; }
-  .workout-item p { margin: 2px 0; font-size: 14px; color: var(--muted); }
-  .workout-item .obs { color: var(--accent); font-style: italic; font-size: 13px; margin-top: 5px; }
+  .plan-category-title {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+    letter-spacing: 1px;
+  }
 
-  /* Biblioteca Style (With Video) */
+  /* Biblioteca Style */
   .lib-exercise { background: var(--panel); border-radius: 14px; padding: 15px; margin-top: 15px; border: 1px solid #2a2a2a; }
   .lib-exercise video { width: 100%; border-radius: 10px; background: #000; margin-bottom: 10px; }
   .lib-exercise h3 { margin: 5px 0; font-size: 16px; color: var(--accent); }
@@ -91,28 +94,20 @@
         <img src="logo.png">
         <div class="brand">
             <div class="title" id="userName">Carregando...</div>
-            <div class="subtitle">@personal.renanb</div>
+            <div class="subtitle">Consultoria Renan Personal</div>
         </div>
     </header>
 
     <nav class="menu">
-        <button id="menuTreino" class="active">Plano personalizado</button>
+        <button id="menuTreino" class="active">Plano Personalizado</button>
         <button id="menuBiblioteca">Biblioteca</button>
-        <button id="logoutBtn" class="ghost" style="flex:0.5">Sair</button>
+        <button id="logoutBtn" class="ghost" style="flex:0.4">Sair</button>
     </nav>
 
     <main class="content">
         <section id="treinoArea">
-            <div class="section-box" id="heroTreino">
-                <h2>Meus Treinos</h2>
-                <p style="color:var(--muted); font-size: 14px;">Selecione a ficha do dia:</p>
-                <div class="workouts" id="workoutBtns"></div>
-            </div>
-
-            <div id="workoutDetails" style="display:none">
-                <div id="exercisesList"></div>
-                <button onclick="backToSelection()" class="primary" style="margin-top:15px">Voltar</button>
-            </div>
+            <div id="planContent">
+                </div>
         </section>
 
         <section id="bibliotecaArea" style="display:none">
@@ -137,22 +132,29 @@
 
 <script>
 const biblioteca = {
-    peito: [{nome:"cross over polia baixa", video:"cross over polia baixa.mp4"}, {nome:"crucifixo reto", video:"crucifixo.mp4"}, {nome:"supino reto barra", video:"supino.mp4"}],
-    costas: [{nome:"Puxada supinada", video:"puxada supinada.mp4"}, {nome:"Remada unilateral", video:"Remada Unilateral com Halter.mp4"}],
-    pernas: [{nome:"leg press", video:"leg press.mp4"}, {nome:"agachamento smith", video:"agachamento smith.mp4"}],
-    ombro: [{nome:"elevação lateral", video:"elevação lateral.mp4"}],
-    biceps: [{nome:"Rosca direta barra", video:"rosca direta barra.mp4"}],
-    triceps: [{nome:"triceps pulley", video:"triceps pulley.mp4"}],
+    peito: [{nome:"Supino Reto", video:"supino.mp4"}, {nome:"Peck Deck", video:"peck_deck.mp4"}],
+    costas: [{nome:"Puxada Frente", video:"puxada.mp4"}, {nome:"Remada Baixa", video:"remada.mp4"}],
+    pernas: [{nome:"Leg Press", video:"leg_press.mp4"}, {nome:"Agachamento", video:"agachamento.mp4"}],
+    ombro: [{nome:"Elevação Lateral", video:"elevacao_lateral.mp4"}],
+    biceps: [{nome:"Rosca Direta", video:"rosca.mp4"}],
+    triceps: [{nome:"Triceps Pulley", video:"triceps.mp4"}],
     core: [{nome:"Prancha", video:"prancha.mp4"}]
 };
 
 const students = {
     "ALU287": {
         name: "Rafael Gomes",
-        treinos: {
-            "A": [{ex:"Supino Reto", sets:"3", reps:"12", obs:"Controle na descida"}, {ex:"Remada Baixa", sets:"3", reps:"12", obs:"Tronco fixo"}],
-            "B": [{ex:"Leg Press", sets:"4", reps:"15", obs:"Pés paralelos"}]
-        }
+        // Organizei seu texto em blocos para o design ficar profissional
+        plano: [
+            { cat: "Treino Semanal", desc: "🟢 DIA 1 – PERNAS + GLÚTEOS\nAgachamento livre ou no smith – 4x12\nLeg press – 3x15\nCadeira extensora – 3x12 + dropset\nStiff com halteres – 3x12\nMesa flexora – 3x15\nAbdução de quadril – 3x20\n\n🔥 Finalização:\n• Caminhada inclinada – 15 min" },
+            { cat: "Treino Semanal", desc: "🟢 DIA 2 – COSTAS + BÍCEPS\nPuxada aberta – 4x12\nRemada baixa – 3x12\nRemada unilateral halter – 3x12\nRosca direta – 3x12\nRosca alternada – 3x10 + dropset\n\n🔥 Finalização:\n• Bicicleta – 12–15 min" },
+            { cat: "Treino Semanal", desc: "🟢 DIA 3 – GLÚTEOS + CORE\nElevação pélvica – 4x12\nAfundo no lugar – 3x10 cada perna\nCadeira abdutora – 3x20\nPrancha – 3x30–40s\nAbdominal infra banco – 3x15\n\n🔥 Finalização:\n• Escada ou elíptico – 10 min" },
+            { cat: "Treino Semanal", desc: "🟢 DIA 4 – PEITO + OMBRO + TRÍCEPS\nSupino máquina ou halter – 4x12\nCrucifixo – 3x12\nElevação lateral – 3x15\nTríceps corda – 3x12\nTríceps banco – 3x até quase falhar\n\n🔥 Finalização:\n• Caminhada moderada – 15 min" },
+            { cat: "Treino Metabólico", desc: "🟢 DIA 5 – CIRCUITO 🔥\nAgachamento + halter – 15\nRemada baixa – 12\nElevação lateral – 15\nAbdominal – 20\nPolichinelo ou bike – 1 min\n(3 a 4 voltas)" },
+            { cat: "Guia Alimentar", desc: "🥗 ALIMENTAÇÃO – BLOCOS\nProteína em TODAS as refeições\nFrutas liberadas 🍓🍎\nCarbo controlado\n\n🟢 MODELO:\n1. Ovos + fruta + café\n2. Iogurte + fruta + castanhas\n3. Almoço: Proteína + Arroz/Batata + Legumes\n4. Lanche: Shake ou Iogurte\n5. Jantar: Proteína + Legumes\n\n📌 Água: mínimo 2L/dia" },
+            { cat: "Receita do Mês", desc: "🥘 FRANGO CREMOSO FUNCIONAL\n150g frango desfiado + 1 col req. light + 1 col creme ricota + temperos + legumes.\nRefogue tudo e finalize com os cremes. Alta saciedade!" },
+            { cat: "Desafio 14 Dias", desc: "🚀 CORPO EM MOVIMENTO\n1. Treinar/Caminhar TODO dia\n2. Proteína em tudo\n3. 2L Água\n4. Fotos dia 1 e 14\n5. Proibido se pesar!\n\n🎁 Recompensa: Algo que valorize seu corpo!" }
+        ]
     }
 };
 
@@ -165,11 +167,24 @@ document.getElementById('enterBtn').onclick = () => {
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('appScreen').style.display = 'flex';
         document.getElementById('userName').innerText = currentUser.name;
-        renderWorkoutButtons();
+        renderPlan();
     } else {
         document.getElementById('loginMsg').innerText = "Código não encontrado.";
     }
 };
+
+function renderPlan() {
+    const container = document.getElementById('planContent');
+    container.innerHTML = '<h2>Seu Planejamento</h2>';
+    currentUser.plano.forEach(item => {
+        container.innerHTML += `
+            <div class="plan-item">
+                <span class="plan-category-title">${item.cat}</span>
+                ${item.desc}
+            </div>
+        `;
+    });
+}
 
 function showSection(id) {
     document.getElementById('treinoArea').style.display = 'none';
@@ -182,39 +197,6 @@ function showSection(id) {
 document.getElementById('menuTreino').onclick = () => showSection('treinoArea');
 document.getElementById('menuBiblioteca').onclick = () => showSection('bibliotecaArea');
 document.getElementById('logoutBtn').onclick = () => location.reload();
-
-function renderWorkoutButtons() {
-    const container = document.getElementById('workoutBtns');
-    container.innerHTML = '';
-    Object.keys(currentUser.treinos).forEach(key => {
-        const btn = document.createElement('button');
-        btn.innerText = key;
-        btn.onclick = () => loadWorkout(key);
-        container.appendChild(btn);
-    });
-}
-
-function loadWorkout(key) {
-    const list = document.getElementById('exercisesList');
-    list.innerHTML = `<h2 style="color:var(--accent)">Treino ${key}</h2>`;
-    document.getElementById('heroTreino').style.display = 'none';
-    document.getElementById('workoutDetails').style.display = 'block';
-    
-    currentUser.treinos[key].forEach(ex => {
-        list.innerHTML += `
-            <div class="workout-item">
-                <h3>${ex.ex}</h3>
-                <p><strong>Séries:</strong> ${ex.sets} | <strong>Reps:</strong> ${ex.reps}</p>
-                ${ex.obs ? `<p class="obs">${ex.obs}</p>` : ''}
-            </div>
-        `;
-    });
-}
-
-function backToSelection() {
-    document.getElementById('heroTreino').style.display = 'block';
-    document.getElementById('workoutDetails').style.display = 'none';
-}
 
 function loadLib(cat) {
     const container = document.getElementById('libContent');
