@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
 <title>Consultoria — Renan Personal</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #050505;
@@ -14,100 +14,90 @@
     --muted: #a0a0a0;
   }
 
-  body { background: var(--bg); font-family: "Inter", sans-serif; margin: 0; color: var(--text); line-height: 1.6; }
-  .center { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-  .app { width: 100%; max-width: 450px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+  body {
+    background: var(--bg);
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .app { max-width: 450px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
   
-  /* Login */
-  .login-box { width: 100%; background: #0b0b0b; padding: 30px; border-radius: 15px; border: 1px solid #1a1a1a; text-align: center; }
-  .login-box img { width: 100px; margin-bottom: 20px; }
-  input { width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #2a2a2a; background: #111; color: #fff; font-size: 16px; box-sizing: border-box; }
-  button.btn-login { width: 100%; padding: 15px; margin-top: 15px; border-radius: 10px; border: none; background: var(--accent); color: #000; font-weight: 800; cursor: pointer; }
+  header { padding: 25px 20px; border-bottom: 2px solid var(--accent); background: #000; text-align: center; }
+  header img { width: 80px; margin-bottom: 10px; }
+  .user-welcome { font-size: 20px; font-weight: 800; color: var(--accent); }
 
-  /* App Interface */
-  header { padding: 20px; border-bottom: 2px solid var(--accent); background: #000; display: flex; align-items: center; gap: 15px; }
-  header img { width: 50px; height: 50px; border-radius: 8px; }
-  .user-info .name { font-weight: 800; font-size: 16px; color: var(--accent); }
-
-  nav.tabs { display: flex; background: #000; border-bottom: 1px solid #222; }
-  nav.tabs button { flex: 1; padding: 15px; background: none; border: none; color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; }
+  nav.tabs { display: flex; background: #000; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid #222; }
+  nav.tabs button { flex: 1; padding: 15px; background: none; border: none; color: var(--muted); font-weight: 600; font-size: 13px; text-transform: uppercase; cursor: pointer; }
   nav.tabs button.active { color: var(--accent); border-bottom: 3px solid var(--accent); }
 
-  main { padding: 15px; flex: 1; }
+  main { padding: 20px; flex: 1; }
   
-  /* Estilo da Lista de Treino */
-  .plano-container { 
+  /* Estilização do Conteúdo em Lista */
+  .content-block { 
     background: var(--panel); 
     padding: 20px; 
     border-radius: 15px; 
-    white-space: pre-wrap; /* Essencial para manter sua formatação */
+    white-space: pre-wrap; /* Mantém as quebras de linha que você digitou */
     font-size: 15px;
     border: 1px solid #1a1a1a;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
   }
 
-  /* Biblioteca */
-  .lib-card { background: var(--panel); border-radius: 12px; margin-bottom: 15px; overflow: hidden; border: 1px solid #222; }
-  .lib-card video { width: 100%; display: block; }
-  .lib-card h4 { padding: 10px; margin: 0; font-size: 13px; color: var(--accent); text-transform: uppercase; }
+  /* Biblioteca (Com Vídeos) */
+  .lib-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+  .lib-card { background: var(--panel); border-radius: 12px; overflow: hidden; border: 1px solid #222; }
+  .lib-card video { width: 100%; display: block; background: #000; }
+  .lib-card h4 { padding: 12px; margin: 0; font-size: 14px; text-transform: uppercase; color: var(--accent); }
 
   .hidden { display: none; }
-  footer { padding: 20px; text-align: center; color: #444; font-size: 10px; }
+  footer { padding: 30px; text-align: center; color: #444; font-size: 11px; }
+  
+  /* Ajuste para destacar os títulos que começam com emojis */
+  .content-block b { color: var(--accent); font-weight: 800; }
 </style>
 </head>
 <body>
 
-<div id="loginScreen" class="center">
-    <div class="login-box">
-        <img src="logo.png" alt="Logo">
-        <h2 style="margin-bottom: 20px;">Acessar Treino</h2>
-        <input id="codeInput" type="text" placeholder="Digite seu código (ALU287)">
-        <button class="btn-login" onclick="handleLogin()">ENTRAR NO APP</button>
-        <p id="error" style="color: red; font-size: 13px; margin-top: 10px;"></p>
-    </div>
-</div>
-
-<div id="appScreen" class="app hidden">
+<div class="app">
     <header>
-        <img src="logo.png">
-        <div class="user-info">
-            <div class="name" id="userNameDisplay"></div>
-            <div style="font-size:11px; color:var(--muted)">Consultoria Online</div>
-        </div>
+        <img src="logo.png" alt="Logo">
+        <div class="user-welcome" id="userName">Área do Aluno</div>
+        <div style="font-size: 12px; color: var(--muted)">Plano de Treino & Nutrição</div>
     </header>
 
     <nav class="tabs">
-        <button id="tabPlano" class="active" onclick="showTab('plano')">Meu Plano</button>
-        <button id="tabLib" onclick="showTab('lib')">Execuções</button>
+        <button id="tab1" class="active" onclick="switchTab('plano')">Meu Plano</button>
+        <button id="tab2" onclick="switchTab('lib')">Biblioteca</button>
     </nav>
 
     <main>
         <section id="secPlano">
-            <div class="plano-container" id="planoTexto"></div>
+            <div class="content-block" id="planoTexto">
+                </div>
         </section>
 
         <section id="secLib" class="hidden">
-            <div id="bibliotecaList">
+            <div class="lib-grid">
                 <div class="lib-card">
-                    <video src="agachamento.mp4" controls></video>
-                    <h4>Agachamento Livre</h4>
+                    <video src="video1.mp4" controls></video>
+                    <h4>Execução: Agachamento</h4>
                 </div>
                 <div class="lib-card">
-                    <video src="stiff.mp4" controls></video>
-                    <h4>Stiff com Halteres</h4>
+                    <video src="video2.mp4" controls></video>
+                    <h4>Execução: Supino</h4>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer>RENAN PERSONAL TRAINER © 2025</footer>
+    <footer>© 2025 Renan Personal Trainer <br> Foco • Constância • Resultado</footer>
 </div>
 
 <script>
-// Banco de dados dos alunos
-const database = {
-    "ALU287": {
-        nome: "Rafael Gomes",
-        conteudo: `🟢 DIA 1 – PERNAS + GLÚTEOS
+// Colei aqui exatamente o texto que você enviou
+const planoPersonalizado = `🟢 DIA 1 – PERNAS + GLÚTEOS
 Agachamento livre ou no smith – 4x12
 Leg press – 3x15
 Cadeira extensora – 3x12 + dropset
@@ -173,32 +163,18 @@ Refeição 5: ✔️ Proteína + legumes + fio de azeite
 2️⃣ Proteína em tudo
 3️⃣ 2L Água
 4️⃣ Foto Dia 1 e 14
-5️⃣ Não se pesar!
+5️⃣ Não se pesar!`;
 
-🎁 Recompensa: Roupa nova ao final!`
-    }
-};
-
-function handleLogin() {
-    const code = document.getElementById('codeInput').value.toUpperCase();
-    const user = database[code];
-    
-    if(user) {
-        document.getElementById('loginScreen').classList.add('hidden');
-        document.getElementById('appScreen').classList.remove('hidden');
-        document.getElementById('userNameDisplay').innerText = user.nome;
-        document.getElementById('planoTexto').innerText = user.conteudo;
-    } else {
-        document.getElementById('error').innerText = "Código inválido!";
-    }
-}
-
-function showTab(type) {
+function switchTab(type) {
     document.getElementById('secPlano').classList.toggle('hidden', type !== 'plano');
     document.getElementById('secLib').classList.toggle('hidden', type !== 'lib');
-    document.getElementById('tabPlano').classList.toggle('active', type === 'plano');
-    document.getElementById('tabLib').classList.toggle('active', type === 'lib');
+    document.getElementById('tab1').classList.toggle('active', type === 'plano');
+    document.getElementById('tab2').classList.toggle('active', type === 'lib');
 }
+
+window.onload = () => {
+    document.getElementById('planoTexto').innerText = planoPersonalizado;
+};
 </script>
 </body>
 </html>
