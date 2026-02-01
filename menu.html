@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Editor - Tela de Treino (Renan)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0b0b;
+      --card:#111111;
+      --panel:#f6f6f6;
+      --accent:#ffcf00;
+      --text:#ffffff;
+      --muted:#cfd3d6;
+      --radius:12px;
+      --gap:14px;
+      font-size:16px;
+    }
+
+    *{box-sizing:border-box; margin:0; padding:0;}
+    html,body{height:100%; width:100%; overflow-x:hidden;}
+    body{
+      font-family:'Inter', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background:#0b0b0b;
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      padding-bottom:70px;
+    }
+
+    /* header */
+    .header{
+      background:var(--bg);
+      padding:12px 16px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      border-bottom:2px solid var(--accent);
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand img {
+      width: 42px;  /* 🔹 Tamanho reduzido da logo */
+      height: auto;
+      border-radius: 6px;
+    }
+
+    .brand .name{font-weight:700;font-size:16px;color:var(--text);}
+    .brand .sub{font-weight:500;color:var(--muted);font-size:12px;}
+
+    /* grid */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+      gap:10px;
+      padding:16px;
+      width:100%;
+      max-width:100%;
+    }
+
+    /* botão como link */
+    a.card{
+      background:var(--panel);
+      color:#111;
+      padding:12px;
+      border-radius:10px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-height:80px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.25);
+      text-decoration:none;
+      transition:transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    a.card:active{
+      transform:scale(0.97);
+      box-shadow:0 1px 6px rgba(0,0,0,0.4);
+    }
+
+    .icon{
+      width:42px; height:42px;
+      background:var(--bg);
+      color:var(--accent);
+      border-radius:8px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:18px; font-weight:700;
+      flex-shrink:0;
+    }
+
+    .txt{display:flex;flex-direction:column;}
+    .txt .title{font-weight:700;font-size:14px;color:#111;}
+    .txt .meta{font-size:12px;color:#444;margin-top:2px;}
+
+    @media(max-width:480px){
+      .brand img { width: 36px; } /* 🔹 Logo menor no celular */
+      a.card{padding:10px;min-height:70px;}
+      .brand .name{font-size:14px;}
+      .grid{gap:8px;padding:12px;}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="brand">
+      <img src="logo.png" alt="Logo"> <!-- Substitua 'logo.png' pela sua imagem -->
+      <div>
+        <div class="name">Renan Personal Trainer</div>
+        <div class="sub">@personal.renanb</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="grid">
+    <a href="treinos geral.html" class="card">
+      <div class="icon">🏋️</div>
+      <div class="txt">
+        <div class="title">Treinos</div>
+        <div class="meta">Acessar sua biblioteca</div>
+      </div>
+    </a>
+
+    <a href="https://seulinkalimentar.com" class="card">
+      <div class="icon">📄</div>
+      <div class="txt">
+        <div class="title">Plano alimentar</div>
+        <div class="meta">Opções rápidas</div>
+      </div>
+    </a>
+    
+    <a href="receitas fitness.html" class="card">
+      <div class="icon">🥗</div>
+      <div class="txt">
+        <div class="title">Receitas fitness</div>
+        <div class="meta">Opções rápidas</div>
+      </div>
+    </a>
+
+    <a href="avaliações.html" class="card">
+      <div class="icon">📝</div>
+      <div class="txt">
+        <div class="title">Avaliações</div>
+        <div class="meta">Assessoria</div>
+      </div>
+    </a>
+ 
+    <a href="avaliação fisica.html" class="card">
+      <div class="icon">📏</div>
+      <div class="txt">
+        <div class="title">Avaliação Fisica</div>
+        <div class="meta">Assessoria</div>
+      </div>
+    </a>
+
+    <a href="progresso.html" class="card">
+      <div class="icon">📈</div>
+      <div class="txt">
+        <div class="title">Progresso do aluno</div>
+        <div class="meta">Visualize ganhos</div>
+      </div>
+    </a>
+
+    <a href="pagamento .html" class="card">
+      <div class="icon">💲</div>
+      <div class="txt">
+        <div class="title">Pagamentos</div>
+        <div class="meta">Vencimento</div>
+      </div>
+    </a>
+  </div>
+
+  <footer style="text-align:center; padding:16px; font-size:12px; color:#888; border-top:1px solid rgba(255,255,255,0.1);">
+    © 2025 Renan Personal Trainer — Todos os direitos reservados
+  </footer>
+
+</body>
+</html>
