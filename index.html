@@ -3,230 +3,201 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-<title>Área do Aluno — Renan Personal Trainer</title>
+<title>Consultoria — Renan Personal</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0c0c0c;
-    --panel: #1c1c1c;
+    --bg: #050505;
+    --panel: #121212;
     --accent: #ffcf00;
-    --text: #fff;
-    --muted: #bbbbbb;
-    --maxw: 420px;
+    --text: #ffffff;
+    --muted: #a0a0a0;
   }
 
-  body {
-    background: var(--bg);
-    font-family: "Inter", sans-serif;
-    margin: 0;
-    padding: 0;
-    color: var(--text);
-    -webkit-font-smoothing: antialiased;
-  }
-
+  body { background: var(--bg); font-family: "Inter", sans-serif; margin: 0; color: var(--text); line-height: 1.6; }
   .center { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-  .app { width: 100%; max-width: var(--maxw); margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+  .app { width: 100%; max-width: 450px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
   
   /* Login */
-  .login { width: 100%; max-width: var(--maxw); background: #0b0b0b; padding: 25px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
-  .logo { display: block; margin: 0 auto 15px; width: 100px; height: 100px; object-fit: contain; }
-  input, button { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #2a2a2a; background: #111; color: #fff; font-size: 16px; margin-top: 10px; }
-  button.primary { background: var(--accent); color: #000; border: 0; font-weight: 800; cursor: pointer; }
-  button.ghost { background: transparent; border: 1px solid #333; color: #fff; cursor: pointer; }
+  .login-box { width: 100%; background: #0b0b0b; padding: 30px; border-radius: 15px; border: 1px solid #1a1a1a; text-align: center; }
+  .login-box img { width: 100px; margin-bottom: 20px; }
+  input { width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #2a2a2a; background: #111; color: #fff; font-size: 16px; box-sizing: border-box; }
+  button.btn-login { width: 100%; padding: 15px; margin-top: 15px; border-radius: 10px; border: none; background: var(--accent); color: #000; font-weight: 800; cursor: pointer; }
 
-  /* Header & Nav */
-  header.app-header { background: #000; padding: 15px; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid var(--accent); }
-  header.app-header img { width: 45px; height: 45px; border-radius: 8px; }
-  .brand .title { font-weight: 800; font-size: 16px; }
-  .brand .subtitle { font-size: 12px; color: var(--muted); }
+  /* App Interface */
+  header { padding: 20px; border-bottom: 2px solid var(--accent); background: #000; display: flex; align-items: center; gap: 15px; }
+  header img { width: 50px; height: 50px; border-radius: 8px; }
+  .user-info .name { font-weight: 800; font-size: 16px; color: var(--accent); }
+
+  nav.tabs { display: flex; background: #000; border-bottom: 1px solid #222; }
+  nav.tabs button { flex: 1; padding: 15px; background: none; border: none; color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; }
+  nav.tabs button.active { color: var(--accent); border-bottom: 3px solid var(--accent); }
+
+  main { padding: 15px; flex: 1; }
   
-  .menu { display: flex; gap: 8px; padding: 12px; background: #050505; }
-  .menu button { flex: 1; padding: 10px; font-weight: 700; font-size: 13px; border-radius: 8px; border: 1px solid #222; background: #111; color: var(--muted); }
-  .menu button.active { background: var(--accent); color: #000; border: 0; }
-
-  /* Content */
-  main.content { flex: 1; padding: 15px; }
-  .section-box { background: var(--panel); border: 1px solid #2a2a2a; padding: 18px; border-radius: 14px; margin-bottom: 18px; }
-  .section-box h2 { margin-top: 0; color: var(--accent); font-size: 20px; }
-
-  /* Workouts Grid */
-  .workouts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 15px; }
-  .workouts button { padding: 12px; border-radius: 8px; background: #1a1a1a; color: #fff; border: 1px solid #333; font-weight: 800; }
-  .workouts button.selected { background: var(--accent); color: #000; }
-
-  /* Treino List Style (Text Only) */
-  .workout-item { 
-    background: #1a1a1a; 
-    padding: 15px; 
-    border-radius: 10px; 
-    margin-bottom: 10px; 
-    border-left: 4px solid var(--accent);
+  /* Estilo da Lista de Treino */
+  .plano-container { 
+    background: var(--panel); 
+    padding: 20px; 
+    border-radius: 15px; 
+    white-space: pre-wrap; /* Essencial para manter sua formatação */
+    font-size: 15px;
+    border: 1px solid #1a1a1a;
   }
-  .workout-item h3 { margin: 0 0 5px 0; font-size: 16px; color: #fff; text-transform: uppercase; }
-  .workout-item p { margin: 2px 0; font-size: 14px; color: var(--muted); }
-  .workout-item .obs { color: var(--accent); font-style: italic; font-size: 13px; margin-top: 5px; }
 
-  /* Biblioteca Style (With Video) */
-  .lib-exercise { background: var(--panel); border-radius: 14px; padding: 15px; margin-top: 15px; border: 1px solid #2a2a2a; }
-  .lib-exercise video { width: 100%; border-radius: 10px; background: #000; margin-bottom: 10px; }
-  .lib-exercise h3 { margin: 5px 0; font-size: 16px; color: var(--accent); }
+  /* Biblioteca */
+  .lib-card { background: var(--panel); border-radius: 12px; margin-bottom: 15px; overflow: hidden; border: 1px solid #222; }
+  .lib-card video { width: 100%; display: block; }
+  .lib-card h4 { padding: 10px; margin: 0; font-size: 13px; color: var(--accent); text-transform: uppercase; }
 
-  footer { padding: 20px; text-align: center; font-size: 11px; color: #555; }
+  .hidden { display: none; }
+  footer { padding: 20px; text-align: center; color: #444; font-size: 10px; }
 </style>
 </head>
 <body>
 
 <div id="loginScreen" class="center">
-    <div class="login">
-        <img src="logo.png" class="logo">
-        <h2>Área do Aluno</h2>
-        <input id="codeInput" placeholder="Digite seu código">
-        <button id="enterBtn" class="primary">Entrar</button>
-        <p id="loginMsg" style="font-size: 14px; color: #ff4444;"></p>
+    <div class="login-box">
+        <img src="logo.png" alt="Logo">
+        <h2 style="margin-bottom: 20px;">Acessar Treino</h2>
+        <input id="codeInput" type="text" placeholder="Digite seu código (ALU287)">
+        <button class="btn-login" onclick="handleLogin()">ENTRAR NO APP</button>
+        <p id="error" style="color: red; font-size: 13px; margin-top: 10px;"></p>
     </div>
 </div>
 
-<div id="appScreen" style="display:none" class="app">
-    <header class="app-header">
+<div id="appScreen" class="app hidden">
+    <header>
         <img src="logo.png">
-        <div class="brand">
-            <div class="title" id="userName">Carregando...</div>
-            <div class="subtitle">@personal.renanb</div>
+        <div class="user-info">
+            <div class="name" id="userNameDisplay"></div>
+            <div style="font-size:11px; color:var(--muted)">Consultoria Online</div>
         </div>
     </header>
 
-    <nav class="menu">
-        <button id="menuTreino" class="active">Plano personalizado</button>
-        <button id="menuBiblioteca">Biblioteca</button>
-        <button id="logoutBtn" class="ghost" style="flex:0.5">Sair</button>
+    <nav class="tabs">
+        <button id="tabPlano" class="active" onclick="showTab('plano')">Meu Plano</button>
+        <button id="tabLib" onclick="showTab('lib')">Execuções</button>
     </nav>
 
-    <main class="content">
-        <section id="treinoArea">
-            <div class="section-box" id="heroTreino">
-                <h2>Meus Treinos</h2>
-                <p style="color:var(--muted); font-size: 14px;">Selecione a ficha do dia:</p>
-                <div class="workouts" id="workoutBtns"></div>
-            </div>
-
-            <div id="workoutDetails" style="display:none">
-                <div id="exercisesList"></div>
-                <button onclick="backToSelection()" class="primary" style="margin-top:15px">Voltar</button>
-            </div>
+    <main>
+        <section id="secPlano">
+            <div class="plano-container" id="planoTexto"></div>
         </section>
 
-        <section id="bibliotecaArea" style="display:none">
-            <div class="section-box">
-                <h2>Biblioteca</h2>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                    <button class="primary" onclick="loadLib('peito')">Peito</button>
-                    <button class="primary" onclick="loadLib('costas')">Costas</button>
-                    <button class="primary" onclick="loadLib('pernas')">Pernas</button>
-                    <button class="primary" onclick="loadLib('ombro')">Ombro</button>
-                    <button class="primary" onclick="loadLib('biceps')">Biceps</button>
-                    <button class="primary" onclick="loadLib('triceps')">Triceps</button>
-                    <button class="primary" onclick="loadLib('core')">Core</button>
+        <section id="secLib" class="hidden">
+            <div id="bibliotecaList">
+                <div class="lib-card">
+                    <video src="agachamento.mp4" controls></video>
+                    <h4>Agachamento Livre</h4>
                 </div>
-                <div id="libContent"></div>
+                <div class="lib-card">
+                    <video src="stiff.mp4" controls></video>
+                    <h4>Stiff com Halteres</h4>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer>© 2025 Renan Personal Trainer</footer>
+    <footer>RENAN PERSONAL TRAINER © 2025</footer>
 </div>
 
 <script>
-const biblioteca = {
-    peito: [{nome:"cross over polia baixa", video:"cross over polia baixa.mp4"}, {nome:"crucifixo reto", video:"crucifixo.mp4"}, {nome:"supino reto barra", video:"supino.mp4"}],
-    costas: [{nome:"Puxada supinada", video:"puxada supinada.mp4"}, {nome:"Remada unilateral", video:"Remada Unilateral com Halter.mp4"}],
-    pernas: [{nome:"leg press", video:"leg press.mp4"}, {nome:"agachamento smith", video:"agachamento smith.mp4"}],
-    ombro: [{nome:"elevação lateral", video:"elevação lateral.mp4"}],
-    biceps: [{nome:"Rosca direta barra", video:"rosca direta barra.mp4"}],
-    triceps: [{nome:"triceps pulley", video:"triceps pulley.mp4"}],
-    core: [{nome:"Prancha", video:"prancha.mp4"}]
-};
-
-const students = {
+// Banco de dados dos alunos
+const database = {
     "ALU287": {
-        name: "Rafael Gomes",
-        treinos: {
-            "A": [{ex:"Supino Reto", sets:"3", reps:"12", obs:"Controle na descida"}, {ex:"Remada Baixa", sets:"3", reps:"12", obs:"Tronco fixo"}],
-            "B": [{ex:"Leg Press", sets:"4", reps:"15", obs:"Pés paralelos"}]
-        }
+        nome: "Rafael Gomes",
+        conteudo: `🟢 DIA 1 – PERNAS + GLÚTEOS
+Agachamento livre ou no smith – 4x12
+Leg press – 3x15
+Cadeira extensora – 3x12 + dropset
+Stiff com halteres – 3x12
+Mesa flexora – 3x15
+Abdução de quadril – 3x20
+
+🔥 Finalização:
+• Caminhada inclinada – 15 min
+
+🟢 DIA 2 – COSTAS + BÍCEPS
+Puxada aberta – 4x12
+Remada baixa – 3x12
+Remada unilateral halter – 3x12
+Rosca direta – 3x12
+Rosca alternada – 3x10 + dropset
+
+🔥 Finalização:
+• Bicicleta – 12–15 min
+
+🟢 DIA 3 – GLÚTEOS + CORE
+Elevação pélvica – 4x12
+Afundo no lugar – 3x10 cada perna
+Cadeira abdutora – 3x20
+Prancha – 3x30–40s
+Abdominal infra banco – 3x15
+
+🔥 Finalização:
+• Escada ou elíptico – 10 min
+
+🟢 DIA 4 – PEITO + OMBRO + TRÍCEPS
+Supino máquina ou halter – 4x12
+Crucifixo – 3x12
+Elevação lateral – 3x15
+Tríceps corda – 3x12
+Tríceps banco – 3x até quase falhar
+
+🔥 Finalização:
+• Caminhada moderada – 15 min
+
+🥗 ALIMENTAÇÃO – SEM HORÁRIOS FIXOS
+👉 Regra simples: comer por blocos, não por horário
+
+🔹 Estrutura diária
+Proteína em TODAS as refeições
+Frutas liberadas (ela gosta 🍓🍎)
+Carbo controlado, não eliminado
+
+🟢 MODELO DE DIA
+Refeição 1: ✔️ Ovos + fruta + café
+Refeição 2: ✔️ Iogurte natural + fruta + castanhas
+Refeição 3: ✔️ Proteína + Arroz/Batata + Legumes
+Refeição 4: ✔️ Shake proteico OU fruta + iogurte
+Refeição 5: ✔️ Proteína + legumes + fio de azeite
+
+📌 Água: mínimo 2L/dia
+
+🍽️ RECEITA: FRANGO CREMOSO
+150g frango desfiado, 1 col req. light, temperos e legumes.
+
+🚀 DESAFIO 14 DIAS
+1️⃣ Treinar/Caminhar TODO dia
+2️⃣ Proteína em tudo
+3️⃣ 2L Água
+4️⃣ Foto Dia 1 e 14
+5️⃣ Não se pesar!
+
+🎁 Recompensa: Roupa nova ao final!`
     }
 };
 
-let currentUser = null;
-
-document.getElementById('enterBtn').onclick = () => {
+function handleLogin() {
     const code = document.getElementById('codeInput').value.toUpperCase();
-    if(students[code]) {
-        currentUser = students[code];
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('appScreen').style.display = 'flex';
-        document.getElementById('userName').innerText = currentUser.name;
-        renderWorkoutButtons();
-    } else {
-        document.getElementById('loginMsg').innerText = "Código não encontrado.";
-    }
-};
-
-function showSection(id) {
-    document.getElementById('treinoArea').style.display = 'none';
-    document.getElementById('bibliotecaArea').style.display = 'none';
-    document.getElementById(id).style.display = 'block';
-    document.getElementById('menuTreino').classList.toggle('active', id === 'treinoArea');
-    document.getElementById('menuBiblioteca').classList.toggle('active', id === 'bibliotecaArea');
-}
-
-document.getElementById('menuTreino').onclick = () => showSection('treinoArea');
-document.getElementById('menuBiblioteca').onclick = () => showSection('bibliotecaArea');
-document.getElementById('logoutBtn').onclick = () => location.reload();
-
-function renderWorkoutButtons() {
-    const container = document.getElementById('workoutBtns');
-    container.innerHTML = '';
-    Object.keys(currentUser.treinos).forEach(key => {
-        const btn = document.createElement('button');
-        btn.innerText = key;
-        btn.onclick = () => loadWorkout(key);
-        container.appendChild(btn);
-    });
-}
-
-function loadWorkout(key) {
-    const list = document.getElementById('exercisesList');
-    list.innerHTML = `<h2 style="color:var(--accent)">Treino ${key}</h2>`;
-    document.getElementById('heroTreino').style.display = 'none';
-    document.getElementById('workoutDetails').style.display = 'block';
+    const user = database[code];
     
-    currentUser.treinos[key].forEach(ex => {
-        list.innerHTML += `
-            <div class="workout-item">
-                <h3>${ex.ex}</h3>
-                <p><strong>Séries:</strong> ${ex.sets} | <strong>Reps:</strong> ${ex.reps}</p>
-                ${ex.obs ? `<p class="obs">${ex.obs}</p>` : ''}
-            </div>
-        `;
-    });
+    if(user) {
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('appScreen').classList.remove('hidden');
+        document.getElementById('userNameDisplay').innerText = user.nome;
+        document.getElementById('planoTexto').innerText = user.conteudo;
+    } else {
+        document.getElementById('error').innerText = "Código inválido!";
+    }
 }
 
-function backToSelection() {
-    document.getElementById('heroTreino').style.display = 'block';
-    document.getElementById('workoutDetails').style.display = 'none';
-}
-
-function loadLib(cat) {
-    const container = document.getElementById('libContent');
-    container.innerHTML = '<h3 style="margin-top:20px; color:var(--accent)">'+cat.toUpperCase()+'</h3>';
-    biblioteca[cat].forEach(ex => {
-        container.innerHTML += `
-            <div class="lib-exercise">
-                <video src="${ex.video}" controls></video>
-                <h3>${ex.nome}</h3>
-            </div>
-        `;
-    });
+function showTab(type) {
+    document.getElementById('secPlano').classList.toggle('hidden', type !== 'plano');
+    document.getElementById('secLib').classList.toggle('hidden', type !== 'lib');
+    document.getElementById('tabPlano').classList.toggle('active', type === 'plano');
+    document.getElementById('tabLib').classList.toggle('active', type === 'lib');
 }
 </script>
 </body>
