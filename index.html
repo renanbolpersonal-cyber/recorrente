@@ -30,7 +30,7 @@
   /* Login */
   .login { width: 100%; max-width: var(--maxw); background: #0b0b0b; padding: 25px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
   .logo { display: block; margin: 0 auto 15px; width: 100px; height: 100px; object-fit: contain; }
-  input, button { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #2a2a2a; background: #111; color: #fff; font-size: 16px; margin-top: 10px; }
+  input, button { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #2a2a2a; background: #111; color: #fff; font-size: 16px; margin-top: 10px; box-sizing: border-box; }
   button.primary { background: var(--accent); color: #000; border: 0; font-weight: 800; cursor: pointer; }
   button.ghost { background: transparent; border: 1px solid #333; color: #fff; cursor: pointer; }
 
@@ -41,7 +41,7 @@
   .brand .subtitle { font-size: 12px; color: var(--muted); }
   
   .menu { display: flex; gap: 8px; padding: 12px; background: #050505; }
-  .menu button { flex: 1; padding: 10px; font-weight: 700; font-size: 13px; border-radius: 8px; border: 1px solid #222; background: #111; color: var(--muted); }
+  .menu button { flex: 1; padding: 10px; font-weight: 700; font-size: 13px; border-radius: 8px; border: 1px solid #222; background: #111; color: var(--muted); margin: 0; }
   .menu button.active { background: var(--accent); color: #000; border: 0; }
 
   /* Content */
@@ -49,30 +49,21 @@
   .section-box { background: var(--panel); border: 1px solid #2a2a2a; padding: 18px; border-radius: 14px; margin-bottom: 18px; }
   .section-box h2 { margin-top: 0; color: var(--accent); font-size: 20px; text-transform: uppercase; letter-spacing: 1px; }
 
-  /* Lista de Itens do Plano (Visual Clean) */
-  .plan-item { 
+  /* Plano List Style */
+  .plan-container { 
     background: #1a1a1a; 
-    padding: 15px; 
+    padding: 20px; 
     border-radius: 10px; 
-    margin-bottom: 12px; 
     border-left: 4px solid var(--accent);
-    white-space: pre-wrap; /* Mantém a organização da lista */
+    white-space: pre-wrap;
     line-height: 1.6;
-  }
-  .plan-category-title {
-    font-size: 12px;
-    color: var(--accent);
-    font-weight: 800;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    display: block;
-    letter-spacing: 1px;
+    font-size: 15px;
   }
 
   /* Biblioteca Style */
   .lib-exercise { background: var(--panel); border-radius: 14px; padding: 15px; margin-top: 15px; border: 1px solid #2a2a2a; }
   .lib-exercise video { width: 100%; border-radius: 10px; background: #000; margin-bottom: 10px; }
-  .lib-exercise h3 { margin: 5px 0; font-size: 16px; color: var(--accent); }
+  .lib-exercise h3 { margin: 5px 0; font-size: 16px; color: var(--accent); text-transform: capitalize; }
 
   footer { padding: 20px; text-align: center; font-size: 11px; color: #555; }
 </style>
@@ -106,8 +97,10 @@
 
     <main class="content">
         <section id="treinoArea">
-            <div id="planContent">
-                </div>
+            <div class="section-box">
+                <h2>Seu Planejamento</h2>
+                <div class="plan-container" id="planContent"></div>
+            </div>
         </section>
 
         <section id="bibliotecaArea" style="display:none">
@@ -132,90 +125,91 @@
 
 <script>
 const biblioteca = {
-    peito: [{nome:"cross over polia baixa", video:"cross over polia baixa.mp4"},
-        {nome:"crucifixo reto", video:"crucifixo.mp4"},
-        {nome:"supino inclinado halter", video:"supino inclinado halter.mp4"},
-        {nome:"supino reto barra", video:"supino.mp4"},
-        {nome:"flexão de braço", video:"flexao_braco.mp4"},
-        {nome:"peck deck", video:"peck deck.mp4"},
-        {nome:"supino maquina", video:"supino maquina.mp4"},
-        {nome:"supino com halter", video:"supino com halteres.mp4"}],
-
-    costas: [ {nome:"Puxada supinada", video:"puxada supinada.mp4"},
-        {nome:"Remada unilateral com halter", video:"Remada Unilateral com Halter.mp4"},
-        {nome:"Remada triangulo", video:"remada triangulo.mp4"},
-        {nome:"puxada frente", video:"puxada.mp4"},
-        {nome:"remada baixa no cabo", video:"Remada Baixa no Cabo.mp4"},
-        {nome:"puxada fechada", video:"puxada fechada.mp4"},
-        {nome:"peck deck inverso", video:"Peck deck inverso.mp4"},
-        {nome:"remada curvada", video:"remada curvad.mp4"}],
-
-    pernas: [ {nome:"panturrilha em pé", video:"panturrilha em pé.mp4"},
-        {nome:"mesa flexora", video:"mesa flexora.mp4"},
-        {nome:"cadeira exetnsora", video:"extensora.mp4"},
-        {nome:"leg press", video:"leg press.mp4"},
-        {nome:"agachamento smith", video:"agachamento smith.mp4"},
-        {nome:"cadeira abdultora", video:"abdutora.mp4"},
-        {nome:"agachamento com halter", video:"agachamento.mp4"},
-        {nome:"elevação de quadril", video:"elevacao_quadril.mp4"},
-        {nome:"stiff unilateral", video:"stiff unilateral.mp4"},
-        {nome:"gluteo no cabo", video:"gluteo no cabo.mp4"},
-        {nome:"agachamento sumo", video:"agachamento_sumo.mp4"},
-        {nome:"afundo no smith", video:"Afundo smith.mp4"},
-        {nome:"hack", video:"hack.mp4"},
-        {nome:"panturrilha sentado", video:"panturrilha sentado.mp4"},
-        {nome:"bulgaro", video:"bulgaro.mp4"},
-        {nome:"afundo", video:"afundo.mp4"},
-        {nome:"agachamento livre barra", video:"agachamento livre barra.mp4"},
-        {nome:"adutora", video:"adutora.mp4"},
-        {nome:"stiff ", video:"stiff.mp4"}],
-         ombro: [{nome:"elevação frontal", video:"elevação frontal.mp4"},
-        {nome:"elevação lateral", video:"elevação lateral.mp4"},
-        {nome:"desenvolvimento", video:"desenvolvimento.mp4"},
-        {nome:"remada alta polia", video:"remada alta polia .mp4"},
-        {nome:"peck deck inverso", video:"Peck deck inverso.mp4"},
-        {nome:"encolhimento", video:"encolhimento.mp4"},
-        {nome:"desenvolvimento", video:"desenvolvimento maquina.mp4"}],
-
-    biceps: [{nome:"Rosca concentrada", video:"rosca concentrada.mp4"},
-        {nome:"Rosca com giro 45", video:"rosca com giro 45.mp4"},
-        {nome:"Rosca com giro", video:"rosca com giro.mp4"},
-        {nome:"Rosca scoth barra", video:"rosca scoth barra.mp4"},
-        {nome:"Rosca direta barra", video:"rosca direta barra.mp4"},
-        {nome:"Rosca martelo", video:"Rosca Martelo.mp4"},
-        {nome:"Rosca unilateral", video:"rosca unilateral.mp4"},
-        {nome:"Rosca direta cross", video:"rosca.mp4"}, 
-        {nome:"Rosca alternada", video:"rosca alternada.mp4"}],
-
-    triceps: [ {nome:"triceps banco", video:"triceps banco.mp4"},
-        {nome:"triceps testa cross", video:"triceps testa.mp4"},
-        {nome:"triceps corda", video:"triceps corda.mp4"},
-        {nome:"triceps coice halter", video:"triceps coice halter.mp4"},
-        {nome:"triceps pulley", video:"triceps pulley.mp4"}],
-
-    core: [
-        {nome:"Prancha", video:"prancha.mp4"},
-        {nome:"prancha lateral", video:"prancha lateral.mp4"},
-        {nome:"sit up", video:"sit up.mp4"},
-        {nome:"infra solo", video:"abdomen infra solo.mp4"},
-        {nome:"Abdominal crunch", video:"abdominal crunch.mp4"}
-    ],
+    peito: [{nome:"cross over polia baixa", video:"cross over polia baixa.mp4"}, {nome:"crucifixo reto", video:"crucifixo.mp4"}, {nome:"supino inclinado halter", video:"supino inclinado halter.mp4"}, {nome:"supino reto barra", video:"supino.mp4"}, {nome:"flexão de braço", video:"flexao_braco.mp4"}, {nome:"peck deck", video:"peck deck.mp4"}, {nome:"supino maquina", video:"supino maquina.mp4"}, {nome:"supino com halter", video:"supino com halteres.mp4"}],
+    costas: [{nome:"Puxada supinada", video:"puxada supinada.mp4"}, {nome:"Remada unilateral com halter", video:"Remada Unilateral com Halter.mp4"}, {nome:"Remada triangulo", video:"remada triangulo.mp4"}, {nome:"puxada frente", video:"puxada.mp4"}, {nome:"remada baixa no cabo", video:"Remada Baixa no Cabo.mp4"}, {nome:"puxada fechada", video:"puxada fechada.mp4"}, {nome:"peck deck inverso", video:"Peck deck inverso.mp4"}, {nome:"remada curvada", video:"remada curvad.mp4"}],
+    pernas: [{nome:"panturrilha em pé", video:"panturrilha em pé.mp4"}, {nome:"mesa flexora", video:"mesa flexora.mp4"}, {nome:"cadeira exetnsora", video:"extensora.mp4"}, {nome:"leg press", video:"leg press.mp4"}, {nome:"agachamento smith", video:"agachamento smith.mp4"}, {nome:"cadeira abdultora", video:"abdutora.mp4"}, {nome:"agachamento com halter", video:"agachamento.mp4"}, {nome:"elevação de quadril", video:"elevacao_quadril.mp4"}, {nome:"stiff unilateral", video:"stiff unilateral.mp4"}, {nome:"gluteo no cabo", video:"gluteo no cabo.mp4"}, {nome:"agachamento sumo", video:"agachamento_sumo.mp4"}, {nome:"afundo no smith", video:"Afundo smith.mp4"}, {nome:"hack", video:"hack.mp4"}, {nome:"panturrilha sentado", video:"panturrilha sentado.mp4"}, {nome:"bulgaro", video:"bulgaro.mp4"}, {nome:"afundo", video:"afundo.mp4"}, {nome:"agachamento livre barra", video:"agachamento livre barra.mp4"}, {nome:"adutora", video:"adutora.mp4"}, {nome:"stiff ", video:"stiff.mp4"}],
+    ombro: [{nome:"elevação frontal", video:"elevação frontal.mp4"}, {nome:"elevação lateral", video:"elevação lateral.mp4"}, {nome:"desenvolvimento", video:"desenvolvimento.mp4"}, {nome:"remada alta polia", video:"remada alta polia .mp4"}, {nome:"peck deck inverso", video:"Peck deck inverso.mp4"}, {nome:"encolhimento", video:"encolhimento.mp4"}, {nome:"desenvolvimento", video:"desenvolvimento maquina.mp4"}],
+    biceps: [{nome:"Rosca concentrada", video:"rosca concentrada.mp4"}, {nome:"Rosca com giro 45", video:"rosca com giro 45.mp4"}, {nome:"Rosca com giro", video:"rosca com giro.mp4"}, {nome:"Rosca scoth barra", video:"rosca scoth barra.mp4"}, {nome:"Rosca direta barra", video:"rosca direta barra.mp4"}, {nome:"Rosca martelo", video:"Rosca Martelo.mp4"}, {nome:"Rosca unilateral", video:"rosca unilateral.mp4"}, {nome:"Rosca direta cross", video:"rosca.mp4"}, {nome:"Rosca alternada", video:"rosca alternada.mp4"}],
+    triceps: [{nome:"triceps banco", video:"triceps banco.mp4"}, {nome:"triceps testa cross", video:"triceps testa.mp4"}, {nome:"triceps corda", video:"triceps corda.mp4"}, {nome:"triceps coice halter", video:"triceps coice halter.mp4"}, {nome:"triceps pulley", video:"triceps pulley.mp4"}],
+    core: [{nome:"Prancha", video:"prancha.mp4"}, {nome:"prancha lateral", video:"prancha lateral.mp4"}, {nome:"sit up", video:"sit up.mp4"}, {nome:"infra solo", video:"abdomen infra solo.mp4"}, {nome:"Abdominal crunch", video:"abdominal crunch.mp4"}]
 };
 
 const students = {
-    "ALU287": {
-        name: "Rafael Gomes",
-        // Organizei seu texto em blocos para o design ficar profissional
-        plano: [
-            { cat: "Treino Semanal", desc: "🟢 DIA 1 – PERNAS + GLÚTEOS\nAgachamento livre ou no smith – 4x12\nLeg press – 3x15\nCadeira extensora – 3x12 + dropset\nStiff com halteres – 3x12\nMesa flexora – 3x15\nAbdução de quadril – 3x20\n\n🔥 Finalização:\n• Caminhada inclinada – 15 min" },
-            { cat: "Treino Semanal", desc: "🟢 DIA 2 – COSTAS + BÍCEPS\nPuxada aberta – 4x12\nRemada baixa – 3x12\nRemada unilateral halter – 3x12\nRosca direta – 3x12\nRosca alternada – 3x10 + dropset\n\n🔥 Finalização:\n• Bicicleta – 12–15 min" },
-            { cat: "Treino Semanal", desc: "🟢 DIA 3 – GLÚTEOS + CORE\nElevação pélvica – 4x12\nAfundo no lugar – 3x10 cada perna\nCadeira abdutora – 3x20\nPrancha – 3x30–40s\nAbdominal infra banco – 3x15\n\n🔥 Finalização:\n• Escada ou elíptico – 10 min" },
-            { cat: "Treino Semanal", desc: "🟢 DIA 4 – PEITO + OMBRO + TRÍCEPS\nSupino máquina ou halter – 4x12\nCrucifixo – 3x12\nElevação lateral – 3x15\nTríceps corda – 3x12\nTríceps banco – 3x até quase falhar\n\n🔥 Finalização:\n• Caminhada moderada – 15 min" },
-            { cat: "Treino Metabólico", desc: "🟢 DIA 5 – CIRCUITO 🔥\nAgachamento + halter – 15\nRemada baixa – 12\nElevação lateral – 15\nAbdominal – 20\nPolichinelo ou bike – 1 min\n(3 a 4 voltas)" },
-            { cat: "Guia Alimentar", desc: "🥗 ALIMENTAÇÃO – BLOCOS\nProteína em TODAS as refeições\nFrutas liberadas 🍓🍎\nCarbo controlado\n\n🟢 MODELO:\n1. Ovos + fruta + café\n2. Iogurte + fruta + castanhas\n3. Almoço: Proteína + Arroz/Batata + Legumes\n4. Lanche: Shake ou Iogurte\n5. Jantar: Proteína + Legumes\n\n📌 Água: mínimo 2L/dia" },
-            { cat: "Receita do Mês", desc: "🥘 FRANGO CREMOSO FUNCIONAL\n150g frango desfiado + 1 col req. light + 1 col creme ricota + temperos + legumes.\nRefogue tudo e finalize com os cremes. Alta saciedade!" },
-            { cat: "Desafio 14 Dias", desc: "🚀 CORPO EM MOVIMENTO\n1. Treinar/Caminhar TODO dia\n2. Proteína em tudo\n3. 2L Água\n4. Fotos dia 1 e 14\n5. Proibido se pesar!\n\n🎁 Recompensa: Algo que valorize seu corpo!" }
-        ]
+    "ALU746": {
+        name: "Tamires Lauriano Quatroque",
+        textoPlano: `🏋️‍♀️ TREINO – 3x por semana
+
+Método: Agonista x Antagonista
+👉 Faz um exercício, emenda o oposto, descansa 45–60s
+
+🟢 DIA 1 – PEITO × COSTAS + CORE
+
+A1. Supino máquina – 3x12
+A2. Puxada frente – 3x12
+
+B1. Crucifixo máquina – 3x12
+B2. Remada baixa – 3x12
+
+C1. Prancha – 3x20–30s
+C2. Abdominal máquina – 3x15
+
+🔥 Finalização rápida:
+• Esteira ou bike – 10 min
+
+🟢 DIA 2 – PERNAS (QUAD × POST) + GLÚTEOS
+
+A1. Cadeira extensora – 3x12
+A2. Mesa flexora – 3x12
+
+B1. Leg press – 3x15
+B2. Stiff com halter – 3x12
+
+C1. Abdução de quadril – 3x15
+C2. Elevação pélvica – 3x12
+
+🔥 Finalização:
+• Caminhada inclinada – 10 min
+
+🟢 DIA 3 – OMBRO × BRAÇOS
+
+A1. Elevação lateral – 3x12
+A2. Desenvolvimento máquina – 3x12
+
+B1. Rosca direta – 3x12
+B2. Tríceps corda – 3x12
+
+C1. Rosca alternada – 2x10
+C2. Tríceps banco – 2x até cansar
+
+🔥 Finalização:
+• Bicicleta – 10 min
+
+📌 Observação importante:
+Carga leve a moderada, foco total em aprender o movimento.
+
+🥗 ALIMENTAÇÃO – SIMPLES (2 refeições + ajustes)
+
+🟢 ALMOÇO
+✔️ Proteína: frango, carne moída ou ovos
+✔️ Carbo: arroz, batata ou macarrão
+✔️ Legumes: opcional
+
+🟢 JANTAR
+✔️ Proteína
+✔️ Carbo menor que no almoço
+✔️ Gordura boa (azeite, queijo, ovo)
+
+💧 Água: pelo menos 1,8 a 2L/dia
+
+🍽️ RECEITA: PANQUECA PROTEICA
+2 ovos, 2 col aveia, sal/canela. Bate e faz na frigideira.
+
+🚀 DESAFIO 7 DIAS
+1️⃣ Treinar 3 dias
+2️⃣ Beber 2L água
+3️⃣ Proteína no almoço e jantar
+4️⃣ Caminhar 10 min sem treino
+5️⃣ Não pular refeições`
     }
 };
 
@@ -228,24 +222,11 @@ document.getElementById('enterBtn').onclick = () => {
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('appScreen').style.display = 'flex';
         document.getElementById('userName').innerText = currentUser.name;
-        renderPlan();
+        document.getElementById('planContent').innerText = currentUser.textoPlano;
     } else {
         document.getElementById('loginMsg').innerText = "Código não encontrado.";
     }
 };
-
-function renderPlan() {
-    const container = document.getElementById('planContent');
-    container.innerHTML = '<h2>Seu Planejamento</h2>';
-    currentUser.plano.forEach(item => {
-        container.innerHTML += `
-            <div class="plan-item">
-                <span class="plan-category-title">${item.cat}</span>
-                ${item.desc}
-            </div>
-        `;
-    });
-}
 
 function showSection(id) {
     document.getElementById('treinoArea').style.display = 'none';
